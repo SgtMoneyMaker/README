@@ -1,0 +1,94 @@
+import turtle
+import os
+
+
+
+wn = turtle.Screen()
+wn.title("Rosen Clicker by Vincent Chiu and Jordan Davies")
+wn.bgcolor("black")
+
+
+wn.register_shape("rosen.gif")
+wn.register_shape("alienrosen.gif")
+wn.register_shape("cowboy.gif")
+wn.register_shape("sayori.gif")
+wn.register_shape("hackgod.gif")
+
+rosen = turtle.Turtle()
+rosen.shape("rosen.gif")
+rosen.speed(0)
+
+
+
+clicks = 0
+
+pen = turtle.Turtle()
+pen.hideturtle()
+pen.color("white")
+pen.penup()
+pen.goto(0, 300)
+pen.write(f"Rosens: {clicks}", align="center", font=("Courier New", 32, "normal"))
+pen.speed(0)
+
+message = turtle.Turtle()
+message.hideturtle()
+message.color("white")
+message.penup()
+message.goto(0, 250)
+message.write("Keep clicking to unlock rarer Rosens!", align="center", font=("Courier New", 16, "normal"))
+message.speed(0)
+
+def play_sound():
+    sound_path = "roblox-death-sound_1.wav"
+    os.system("afplay " + sound_path)
+
+text = turtle.Turtle()
+text.hideturtle()
+text.color("white")
+text.penup()
+text.goto(0, -260)
+text.write("Normal Rosen", align="center", font=("Courier New", 25, "normal"))
+text.speed(0)
+
+def clicked(x, y):
+    global clicks
+    clicks += 1
+    pen.clear()
+    pen.write(f"Rosens: {clicks}", align="center", font=("Courier New", 32, "normal"))
+    if rosen.shape() == "rosen.gif":
+        if clicks >= 20:
+            rosen.shape("alienrosen.gif")
+            text.clear()
+            text.color("green")
+            text.write("Alien Rosen", align="center", font=("Courier New", 25, "normal"))
+            play_sound()        
+    elif rosen.shape() == ("alienrosen.gif"):
+        if clicks >= 40:
+            rosen.shape("cowboy.gif")
+            text.clear()
+            text.color("yellow")
+            text.write("Cowboy Rosen", align="center", font=("Courier New", 25, "normal"))
+            play_sound()
+    elif rosen.shape() == ("cowboy.gif"):
+        if clicks >= 60:
+            rosen.shape("sayori.gif")
+            text.clear()
+            text.color("pink")
+            text.write("Sayori Rosen", align="center", font=("Courier New", 25, "normal"))
+            play_sound()
+    elif rosen.shape() == ("sayori.gif"):
+        if clicks >= 80:
+            rosen.shape("hackgod.gif")
+            text.clear()
+            text.color("red")
+            text.write("Hack God Rosen", align="center", font=("Courier New", 25, "normal"))
+            play_sound()
+
+
+    
+
+
+rosen.onclick(clicked)
+
+
+wn.mainloop()
